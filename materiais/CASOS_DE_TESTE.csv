@@ -1,0 +1,7 @@
+ID,Requisito ou risco,Perfil,Início,Ação,Resultado esperado,Resultado obtido,Estado,Evidência
+CT-01,RF-01 / R-02,Celina,Sessão iniciada,Consultar o pedido 1001,Pedido 1001 apresentado,,Não executado,
+CT-02,RN-01 / R-01,Paulo,Sessão iniciada,Consultar o pedido 1001,Dados do pedido não apresentados,,Não executado,
+CT-03,RF-05,Marta,Sem sessão,Consultar o pedido 1001,Orientação para iniciar sessão,,Não executado,
+CT-04,RF-04,Celina,Pedido 1001 aberto,Enviar 1 anexo,Envio aceite,,Não executado,
+CT-05,RF-04,Celina,Pedido 1001 aberto,Enviar 5 anexos,Envio aceite,,Não executado,
+CT-06,RF-04,Celina,Pedido 1001 aberto,Enviar 6 anexos,Envio recusado,,Não executado,

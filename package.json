@@ -1,0 +1,14 @@
+{
+  "name": "portal-de-pedidos-inss-laboratorio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Laboratório didático para as aulas M15 a M18.",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

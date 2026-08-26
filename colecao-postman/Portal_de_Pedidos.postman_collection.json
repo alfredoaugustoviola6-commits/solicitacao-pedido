@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "Portal de Pedidos — Laboratório M16",
+    "description": "Coleção didática. Execute primeiro a pasta 1, depois as demais.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3100" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1 — Começar",
+      "item": [
+        {
+          "name": "Verificar se o portal está disponível",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/saude", "host": ["{{base_url}}"], "path": ["api", "saude"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Resposta 200', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Iniciar sessão como Celina",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"celina\",\n  \"password\": \"celina123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/login", "host": ["{{base_url}}"], "path": ["api", "login"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Login aceite', () => pm.response.to.have.status(200));", "const body = pm.response.json();", "pm.collectionVariables.set('token', body.token);"] } }]
+        }
+      ]
+    },
+    {
+      "name": "2 — Consultar pedidos",
+      "item": [
+        {
+          "name": "Consultar o pedido 1001",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{base_url}}/api/pedidos/1001", "host": ["{{base_url}}"], "path": ["api", "pedidos", "1001"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Pedido encontrado', () => pm.response.to.have.status(200));", "pm.test('Número correto', () => pm.expect(pm.response.json().pedido.numero).to.eql('1001'));"] } }]
+        },
+        {
+          "name": "Consultar um pedido inexistente",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{base_url}}/api/pedidos/9999", "host": ["{{base_url}}"], "path": ["api", "pedidos", "9999"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Pedido não encontrado', () => pm.response.to.have.status(404));"] } }]
+        },
+        {
+          "name": "Consultar sem iniciar sessão",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/pedidos/1001", "host": ["{{base_url}}"], "path": ["api", "pedidos", "1001"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Sessão necessária', () => pm.response.to.have.status(401));"] } }]
+        },
+        {
+          "name": "Consultar número com letras — investigar",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{base_url}}/api/pedidos/ABC", "host": ["{{base_url}}"], "path": ["api", "pedidos", "ABC"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('O requisito espera 400', () => pm.response.to.have.status(400));"] } }]
+        }
+      ]
+    },
+    {
+      "name": "3 — Testar anexos",
+      "item": [
+        {
+          "name": "Enviar 1 anexo",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"anexos\": [\n    { \"nome\": \"documento-1.pdf\" }\n  ]\n}" }, "url": { "raw": "{{base_url}}/api/pedidos/1001/anexos", "host": ["{{base_url}}"], "path": ["api", "pedidos", "1001", "anexos"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Um anexo aceite', () => pm.response.to.have.status(201));"] } }]
+        },
+        {
+          "name": "Enviar 5 anexos",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"anexos\": [\n    {\"nome\":\"1.pdf\"}, {\"nome\":\"2.pdf\"}, {\"nome\":\"3.pdf\"},\n    {\"nome\":\"4.pdf\"}, {\"nome\":\"5.pdf\"}\n  ]\n}" }, "url": { "raw": "{{base_url}}/api/pedidos/1001/anexos", "host": ["{{base_url}}"], "path": ["api", "pedidos", "1001", "anexos"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Cinco anexos aceites', () => pm.response.to.have.status(201));"] } }]
+        },
+        {
+          "name": "Enviar 6 anexos — investigar",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"anexos\": [\n    {\"nome\":\"1.pdf\"}, {\"nome\":\"2.pdf\"}, {\"nome\":\"3.pdf\"},\n    {\"nome\":\"4.pdf\"}, {\"nome\":\"5.pdf\"}, {\"nome\":\"6.pdf\"}\n  ]\n}" }, "url": { "raw": "{{base_url}}/api/pedidos/1001/anexos", "host": ["{{base_url}}"], "path": ["api", "pedidos", "1001", "anexos"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('O requisito espera recusa', () => pm.response.to.have.status(400));"] } }]
+        }
+      ]
+    },
+    {
+      "name": "4 — Acesso de Paulo",
+      "item": [
+        {
+          "name": "Iniciar sessão como Paulo",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"username\": \"paulo\",\n  \"password\": \"paulo123\"\n}" }, "url": { "raw": "{{base_url}}/api/login", "host": ["{{base_url}}"], "path": ["api", "login"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Login aceite', () => pm.response.to.have.status(200));", "pm.collectionVariables.set('token', pm.response.json().token);"] } }]
+        },
+        {
+          "name": "Paulo tenta consultar o pedido 1001",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{base_url}}/api/pedidos/1001", "host": ["{{base_url}}"], "path": ["api", "pedidos", "1001"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Dados não são apresentados', () => pm.response.to.have.status(404));"] } }]
+        }
+      ]
+    }
+  ]
+}

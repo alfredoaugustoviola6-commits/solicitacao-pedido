@@ -1,0 +1,94 @@
+[
+  {
+    "numero": "1001",
+    "titular": "Celina Mucavele",
+    "tipo": "Pedido de benefício",
+    "estado": "Em análise",
+    "dataRegisto": "2026-08-18",
+    "delegacao": "Cidade de Maputo",
+    "responsavel": "celina",
+    "historico": [
+      {
+        "data": "2026-08-18",
+        "evento": "Pedido registado"
+      },
+      {
+        "data": "2026-08-19",
+        "evento": "Documentos recebidos"
+      },
+      {
+        "data": "2026-08-21",
+        "evento": "Análise iniciada"
+      }
+    ]
+  },
+  {
+    "numero": "1002",
+    "titular": "Paulo Cossa",
+    "tipo": "Atualização de dados",
+    "estado": "Concluído",
+    "dataRegisto": "2026-08-15",
+    "delegacao": "Matola",
+    "responsavel": "paulo",
+    "historico": [
+      {
+        "data": "2026-08-15",
+        "evento": "Pedido registado"
+      },
+      {
+        "data": "2026-08-16",
+        "evento": "Dados validados"
+      },
+      {
+        "data": "2026-08-17",
+        "evento": "Pedido concluído"
+      }
+    ]
+  },
+  {
+    "numero": "1003",
+    "titular": "Celina Mucavele",
+    "tipo": "Pedido de declaração",
+    "estado": "Aguardando documento",
+    "dataRegisto": "2026-08-20",
+    "delegacao": "Cidade de Maputo",
+    "responsavel": "celina",
+    "historico": [
+      {
+        "data": "2026-08-25",
+        "evento": "Documento adicional solicitado"
+      },
+      {
+        "data": "2026-08-22",
+        "evento": "Análise documental iniciada"
+      },
+      {
+        "data": "2026-08-20",
+        "evento": "Pedido registado"
+      }
+    ]
+  },
+  {
+    "numero": "1004",
+    "titular": "Celina Mucavele",
+    "tipo": "Pedido de declaração",
+    "estado": "Aguardando documento",
+    "dataRegisto": "2026-08-20",
+    "delegacao": "Cidade de Maputo",
+    "responsavel": "celina",
+    "historico": [
+      {
+        "data": "2026-08-25",
+        "evento": "Documento adicional solicitado"
+      },
+      {
+        "data": "2026-08-22",
+        "evento": "Análise documental iniciada"
+      },
+      {
+        "data": "2026-08-20",
+        "evento": "Pedido registado"
+      }
+    ]
+  }
+]

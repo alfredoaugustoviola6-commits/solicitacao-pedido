@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Pedidos — Laboratório</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">ALUN <span>BUSINESS</span></div>
+    <div class="course">Laboratório M15–M18</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">PORTAL DE PEDIDOS</p>
+      <h1>Consultar um pedido</h1>
+      <p>Ambiente fictício para aprender a testar uma solução de forma prática.</p>
+    </section>
+
+    <section id="loginPanel" class="card login-card">
+      <div>
+        <p class="step">PASSO 1</p>
+        <h2>Escolha como entrar</h2>
+        <p>Use um dos perfis preparados para a atividade.</p>
+      </div>
+      <div class="profiles">
+        <button class="profile" data-user="celina" data-password="celina123">
+          <strong>Celina</strong><span>Tem pedidos próprios</span>
+        </button>
+        <button class="profile" data-user="paulo" data-password="paulo123">
+          <strong>Paulo</strong><span>Não pode ver pedidos de Celina</span>
+        </button>
+        <button class="profile" data-user="tecnico" data-password="tecnico123">
+          <strong>Técnico</strong><span>Pode consultar todos os pedidos</span>
+        </button>
+        <button class="profile" data-user="alfredo" data-password="tecnico123">
+          <strong>Alfredo</strong><span>Pode consultar todos os pedidos</span>
+        </button>
+        <button class="profile guest" id="guestButton">
+          <strong>Marta</strong><span>Continuar sem iniciar sessão</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="workspace" class="workspace hidden">
+      <div class="session-bar">
+        <div><span class="status-dot"></span><span id="sessionText"></span></div>
+        <button id="logoutButton" class="link-button">Trocar perfil</button>
+      </div>
+
+      <div class="grid">
+        <section class="card search-card">
+          <p class="step">PASSO 2</p>
+          <h2>Consultar</h2>
+          <label for="pedidoNumero">Número do pedido</label>
+          <div class="search-row">
+            <input id="pedidoNumero" type="text" inputmode="numeric" placeholder="Ex.: 1001" />
+            <button id="searchButton" class="primary">Consultar</button>
+          </div>
+          <p class="hint">Números preparados: 1001, 1002, 1003 e 9999.</p>
+          <div id="message" class="message hidden" role="status"></div>
+        </section>
+
+        <section class="card mission-card">
+          <p class="step">MISSÃO</p>
+          <h2>Conseguimos confiar?</h2>
+          <ul>
+            <li>O pedido certo aparece?</li>
+            <li>Quem não tem acesso consegue vê-lo?</li>
+            <li>As regras de anexos são respeitadas?</li>
+          </ul>
+        </section>
+      </div>
+
+      <section id="resultPanel" class="card result-card hidden">
+        <div class="result-heading">
+          <div>
+            <p class="step">RESULTADO</p>
+            <h2 id="resultTitle"></h2>
+          </div>
+          <span id="stateBadge" class="badge"></span>
+        </div>
+        <dl id="pedidoDetails" class="details"></dl>
+
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="historyPanel">Histórico</button>
+          <button class="tab" data-tab="attachmentsPanel">Anexos</button>
+        </div>
+
+        <div id="historyPanel" class="tab-panel">
+          <div class="panel-heading">
+            <h3>Histórico do pedido</h3>
+            <button id="historyButton" class="secondary">Carregar histórico</button>
+          </div>
+          <ol id="historyList" class="timeline">
+            <li>Selecione “Carregar histórico”.</li>
+          </ol>
+        </div>
+
+        <div id="attachmentsPanel" class="tab-panel hidden">
+          <h3>Enviar anexos</h3>
+          <p>A regra informada é: no mínimo 1 e no máximo 5 ficheiros.</p>
+          <label for="attachmentCount">Quantidade de anexos</label>
+          <div class="search-row narrow">
+            <input id="attachmentCount" type="number" min="0" max="8" value="1" />
+            <button id="attachmentsButton" class="secondary">Enviar</button>
+          </div>
+          <div id="attachmentMessage" class="message hidden" role="status"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>Projeto fictício para fins exclusivamente didáticos. Nenhum dado real é utilizado.</footer>
+  <script src="app.js"></script>
+</body>
+
+</html>
