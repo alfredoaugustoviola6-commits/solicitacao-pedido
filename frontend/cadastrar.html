@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portal de solicitação</title>
+    <link rel="stylesheet" href="cadastrar.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+            Alun busniss
+        </div>
+        <a href="/">Voltar ao portal </a>
+    </header>
+    <h1>cadastrar novo pedido</h1>
+
+    <p>preenche os dados necessarios para criar um pedido</p>
+
+    <h2>dados do pedido</h2>
+    <form id="pedidoForm">
+        <div>
+            <label for="numero">
+                Número do pedido
+            </label>
+
+            <input id="numero" name="numero" type="text" inputmode="numeric" placeholder="Ex.: 2001" required />
+        </div>
+
+        <div>
+            <label for="titular">
+                Nome do titular
+            </label>
+
+            <input id="titular" name="titular" type="text" placeholder="Nome completo" required />
+        </div>
+
+        <div>
+            <label for="tipo">
+                Tipo do pedido
+            </label>
+
+            <select id="tipo" name="tipo" required>
+                <option value="">Selecione</option>
+                <option value="Pedido de benefício">Pedido de benefício</option>
+                <option value="Atualização de dados">Atualização de dados</option>
+                <option value="Pedido de declaração">Pedido de declaração</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="estado">
+                Estado inicial
+            </label>
+
+            <select id="estado" name="estado" required>
+                <option value="">Selecione</option>
+                <option value="Registado">Registado</option>
+                <option value="Em análise">Em análise</option>
+                <option value="Aguardando documento">Aguardando documento</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="dataRegisto">
+                Data de registo
+            </label>
+
+            <input id="dataRegisto" name="dataRegisto" type="date" required />
+        </div>
+
+        <div>
+            <label for="delegacao">
+                Delegação
+            </label>
+
+            <select id="delegacao" name="delegacao" required>
+                <option value="">Selecione</option>
+                <option value="Cidade de Maputo">Cidade de Maputo</option>
+                <option value="Matola">Matola</option>
+                <option value="Beira">Beira</option>
+                <option value="Nampula">Nampula</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="responsavel">
+                Responsável pelo pedido
+            </label>
+
+            <select id="responsavel" name="responsavel" required>
+                <option value="">Selecione</option>
+                <option value="celina">Celina</option>
+                <option value="paulo">Paulo</option>
+            </select>
+        </div>
+
+        <button class="primary" type="submit">
+            Cadastrar pedido
+        </button>
+        <div id="resultMessage" class="message hidden" role="status"></div>
+
+        <script src="cadastrar.js"></script>
+</body>
+
+</html>

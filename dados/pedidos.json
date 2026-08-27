@@ -90,5 +90,20 @@
         "evento": "Pedido registado"
       }
     ]
+  },
+  {
+    "numero": "2002",
+    "titular": "alfredo viola",
+    "tipo": "Pedido de benefício",
+    "estado": "Registado",
+    "dataRegisto": "2026-08-27",
+    "delegacao": "Cidade de Maputo",
+    "responsavel": "celina",
+    "historico": [
+      {
+        "data": "2026-08-27",
+        "evento": "Pedido registado"
+      }
+    ]
   }
 ]

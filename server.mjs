@@ -10,9 +10,11 @@ const pedidosPath = path.join(__dirname, "dados", "pedidos.json");
 const users = {
   celina: { password: "celina123", name: "Celina Mucavele", role: "utente" },
   paulo: { password: "paulo123", name: "Paulo Cossa", role: "utente" },
-  alfredo: { password: "tecnico123", name: "Técnico do atendimento", role: "alfredo" },
-  alfredo: { password: "tecnico123", name: "Técnico do atendimento", role: "alfredo" }
-}
+  tecnico: { password: "tecnico123", name: "Técnico do atendimento", role: "tecnico" },
+  thamiris: { password: "tecnico123", name: "Thamiris", role: "tecnico" },
+  valter: { password: "tecnico123", name: "Valter", role: "tecnico" }
+
+};
 
 const tokens = new Map();
 const contentTypes = {
@@ -93,6 +95,89 @@ async function apiHandler(req, res, url) {
     return sendJson(res, 200, { utilizador: user });
   }
 
+  if (
+    req.method === "POST" &&
+    url.pathname === "/api/pedidos"
+  ) {
+    const body = await readBody(req);
+
+    const numero = String(body.numero || "").trim();
+    const titular = String(body.titular || "").trim();
+    const tipo = String(body.tipo || "").trim();
+    const estado = String(body.estado || "").trim();
+    const dataRegisto = String(body.dataRegisto || "").trim();
+    const delegacao = String(body.delegacao || "").trim();
+    const responsavel = String(body.responsavel || "").trim();
+
+    if (
+      !numero ||
+      !titular ||
+      !tipo ||
+      !estado ||
+      !dataRegisto ||
+      !delegacao ||
+      !responsavel
+    ) {
+      return sendJson(res, 400, {
+        erro: "Preencha todos os campos obrigatórios."
+      });
+    }
+
+    if (!/^\d+$/.test(numero)) {
+      return sendJson(res, 400, {
+        erro: "O número do pedido deve conter somente números."
+      });
+    }
+
+    const pedidos = JSON.parse(
+      await fs.readFile(pedidosPath, "utf8")
+    );
+
+    const pedidoExistente = pedidos.find(
+      (pedido) => pedido.numero === numero
+    );
+
+    if (pedidoExistente) {
+      return sendJson(res, 409, {
+        erro: "Já existe um pedido com esse número."
+      });
+    }
+
+    const novoPedido = {
+      numero,
+      titular,
+      tipo,
+      estado,
+      dataRegisto,
+      delegacao,
+      responsavel,
+
+      historico: [
+        {
+          data: dataRegisto,
+          evento: "Pedido registado"
+        }
+      ]
+    };
+
+    pedidos.push(novoPedido);
+
+    await fs.writeFile(
+      pedidosPath,
+      JSON.stringify(pedidos, null, 2),
+      "utf8"
+    );
+
+    console.log(
+      `Pedido ${numero} gravado em: ${pedidosPath}`
+    );
+
+    return sendJson(res, 201, {
+      mensagem: "Pedido cadastrado com sucesso.",
+      pedido: publicPedido(novoPedido)
+    });
+  }
+
   const match = url.pathname.match(/^\/api\/pedidos\/([^/]+)(?:\/(historico|anexos))?$/);
   if (!match) return sendJson(res, 404, { erro: "Endereço da API não encontrado." });
 
@@ -105,7 +190,7 @@ async function apiHandler(req, res, url) {
 
   const pedido = pedidos.find((item) => item.numero === numero);
   if (!pedido || !canSeePedido(user, pedido)) {
-    return sendJson(res, 404, { erro: "pedido assossiado a outro usuario." });
+    return sendJson(res, 404, { erro: "Pedido associado a outro usuário." });
   }
 
   if (req.method === "GET" && area === "pedido") {
